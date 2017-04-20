@@ -2,3 +2,6 @@ node_modules
 .project
 *~
 lib/
+
+# WebStorm project
+/.idea/
