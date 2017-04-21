@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ol from 'openlayers';
 import OLComponent from './ol-component';
 
-export default class Map extends React.Component {
+class Map extends React.Component {
   constructor (props) {
     super(props)
     this.map = new ol.Map({
@@ -26,6 +27,10 @@ export default class Map extends React.Component {
     if (this.props.focusOnMount) {
       this.focus()
     }
+  }
+
+  componentWillReceiveProps(newProps) {
+      console.log('Map componentWillReceiveProps, layer.count: ', newProps.layer.count);
   }
 
   componentWillUnmount () {
@@ -83,3 +88,7 @@ Map.defaultProps = {
 Map.childContextTypes = {
   map: React.PropTypes.instanceOf(ol.Map)
 }
+
+const mapStateToProps = ({layer}) => ({layer});
+
+export default connect(mapStateToProps)(Map);

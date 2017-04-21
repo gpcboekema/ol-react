@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ol from 'openlayers';
 import OLContainer from '../ol-container';
 import { buildStyle } from '../style';
 
-export default class Vector extends OLContainer {
+class Vector extends OLContainer {
   constructor (props) {
     super(props)
     this.layer = new ol.layer.Vector({
@@ -28,8 +29,8 @@ export default class Vector extends OLContainer {
 
   componentWillReceiveProps (newProps) {
     this.layer.setStyle(buildStyle(newProps.style));
-    this.layer.setVisible(newProps.visible)
-    this.layer.setZIndex(newProps.zIndex)
+    this.layer.setVisible(newProps.visible);
+    this.layer.setZIndex(newProps.zIndex);
   }
 
   componentWillUnmount () {
@@ -64,3 +65,7 @@ Vector.childContextTypes = {
   layer: React.PropTypes.instanceOf(ol.layer.Vector),
   map: React.PropTypes.instanceOf(ol.Map)
 }
+
+const mapStateToProps = ({layer}) => ({ visible: layer.visible});
+
+export default connect(mapStateToProps)(Vector);
